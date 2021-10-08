@@ -23,6 +23,7 @@ namespace ByteBank.View
     {
         private readonly ContaClienteRepository r_Repositorio;
         private readonly ContaClienteService r_Servico;
+        private CancellationTokenSource _cts;
 
         public MainWindow()
         {
@@ -34,26 +35,57 @@ namespace ByteBank.View
 
         private async void BtnProcessar_Click(object sender, RoutedEventArgs e)
         {
+            BtnCancelar.IsEnabled = true;
             BtnProcessar.IsEnabled = false;
-            var contas = r_Repositorio.GetContaClientes();
+            
+            _cts = new CancellationTokenSource();
 
-            AtualizarView(new List<string>(), TimeSpan.Zero);
+            try
+            {
+                var contas = r_Repositorio.GetContaClientes();
 
-            var inicio = DateTime.Now;
+                AtualizarView(new List<string>(), TimeSpan.Zero);
 
-            var resultado = await ProcessamentoContas(contas);
+                var inicio = DateTime.Now;
 
-            var fim = DateTime.Now;
+                var resultado = await ProcessamentoContasAsync(contas, _cts.Token);
 
-            AtualizarView(resultado, fim - inicio);
+                var fim = DateTime.Now;
+
+                AtualizarView(resultado, fim - inicio);
+
+
+            }
+            catch (TaskCanceledException)
+            {
+                TxtTempo.Text = "Operação cancelada!";
+                
+            }
+
+ 
+
 
             BtnProcessar.IsEnabled = true;
+            BtnCancelar.IsEnabled = false;
         }
 
-        private async Task<string[]> ProcessamentoContas(IEnumerable<ContaCliente> contas)
+        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
         {
-            var tasks = contas.Select(conta => 
-                Task.Factory.StartNew(() => r_Servico.ConsolidarMovimentacao(conta))
+            BtnCancelar.IsEnabled = false;
+            _cts.Cancel();
+           
+        }
+
+        private async Task<string[]> ProcessamentoContasAsync(IEnumerable<ContaCliente> contas, CancellationToken token)
+        {
+            var tasks = contas.Select(conta =>
+                Task.Factory.StartNew(() => {
+                    var resultadoProcessamento = r_Servico.ConsolidarMovimentacao(conta);
+                    if (token.IsCancellationRequested)
+                        throw new TaskCanceledException(resultadoProcessamento);
+                    return resultadoProcessamento;
+                })
+                
             );
 
             return await Task.WhenAll(tasks);
