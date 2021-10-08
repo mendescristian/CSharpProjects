@@ -80,11 +80,12 @@ namespace ByteBank.View
         {
             var tasks = contas.Select(conta =>
                 Task.Factory.StartNew(() => {
-                    var resultadoProcessamento = r_Servico.ConsolidarMovimentacao(conta);
+                    token.ThrowIfCancellationRequested();
+                    var resultadoProcessamento = r_Servico.ConsolidarMovimentacao(conta, token);
                     if (token.IsCancellationRequested)
                         throw new TaskCanceledException(resultadoProcessamento);
                     return resultadoProcessamento;
-                })
+                }, token)
                 
             );
 
