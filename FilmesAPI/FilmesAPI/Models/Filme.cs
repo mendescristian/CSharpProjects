@@ -8,6 +8,7 @@ namespace FilmesAPI.Models
 {
     public class Filme
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "É necessário inserir o titulo!")]
         public string Titulo { get; set; }
         [Required(ErrorMessage = "É necessário inserir o diretor!")]
