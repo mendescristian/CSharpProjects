@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FilmesAPI.Models;
+using FilmesAPI.Data;
 
 namespace FilmesAPI.Controllers
 {
@@ -11,27 +12,32 @@ namespace FilmesAPI.Controllers
     [Route("controller")]
     public class FilmeController : ControllerBase
     {
-        private static List<Filme> filmes = new List<Filme>();
-        private static int id = 1;
+        private FilmeContext _context; //Adicionando o FilmeContext para ler no banco.
+
+        public FilmeController(FilmeContext context) //Iniciando o FilmeContext através de um construtor.
+        {
+            _context = context;
+        }
+ 
 
         [HttpPost]
         public IActionResult AdicionaFilme([FromBody] Filme filme)
         {
-            filme.Id = id++;
-            filmes.Add(filme);
+            _context.Filmes.Add(filme); //Utilizando o DBSet "Filmes" para ADICIONAR um filme no banco.
+            _context.SaveChanges(); //Salvando a adição do filme no banco.
             return CreatedAtAction(nameof(RetornarFilmeById), new { Id = filme.Id }, filme);
         }
 
         [HttpGet]
         public IActionResult RetornarFilme()
         {
-            return Ok(filmes);
+            return Ok(_context.Filmes);
         }
 
         [HttpGet("{id}")]
         public IActionResult RetornarFilmeById(int id)
         {
-            Filme filme =  filmes.FirstOrDefault(filme => filme.Id == id);
+            Filme filme =  _context.Filmes.FirstOrDefault(filme => filme.Id == id);
             if(filme.Id != null)
             {
                 return Ok(filme);
