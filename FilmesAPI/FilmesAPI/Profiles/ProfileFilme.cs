@@ -6,6 +6,7 @@ using AutoMapper;
 using FilmesAPI.Data.Dtos;
 using FilmesAPI.Data.Dtos.CinemaDto;
 using FilmesAPI.Data.Dtos.EnderecoDto;
+using FilmesAPI.Data.Dtos.GerenteDto;
 using FilmesAPI.Models;
 
 namespace FilmesAPI.Profiles
@@ -25,6 +26,10 @@ namespace FilmesAPI.Profiles
             CreateMap<CreateEnderecoDto, Endereco>();
             CreateMap<Endereco, ReadEnderecoDto>();
             CreateMap<UpdateEnderecoDto, Endereco>();
+
+            CreateMap<CreateGerenteDto, Gerente>();
+            CreateMap<Gerente, ReadGerenteDto>();
+            CreateMap<UpdateGerenteDto, Gerente>();
         }
     }
 }

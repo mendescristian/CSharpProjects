@@ -8,11 +8,8 @@ namespace FilmesAPI.Data.Dtos.EnderecoDto
 {
     public class CreateEnderecoDto
     {
-        [Required(ErrorMessage = "Logradouro é obrigatório.")]
         public string Logradouro { get; set; }
-        [Required(ErrorMessage = "Número é obrigatório.")]
         public int Numero { get; set; }
-        [Required(ErrorMessage = "Bairro é obrigatório.")]
         public string Bairro { get; set; }
     }
 }

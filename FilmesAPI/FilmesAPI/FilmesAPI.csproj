@@ -5,8 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20211014141647_CriandoTabelaDeFilme.cs" />
+    <Compile Remove="Migrations\20211014141647_CriandoTabelaDeFilme.Designer.cs" />
+    <Compile Remove="Migrations\20211018133835_Relacionando cinema com endereco.cs" />
+    <Compile Remove="Migrations\20211018133835_Relacionando cinema com endereco.Designer.cs" />
+    <Compile Remove="Migrations\20211018143840_Corrigindo problema de relacao.cs" />
+    <Compile Remove="Migrations\20211018143840_Corrigindo problema de relacao.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

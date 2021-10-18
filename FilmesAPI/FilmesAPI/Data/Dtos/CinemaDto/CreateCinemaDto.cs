@@ -9,10 +9,7 @@ namespace FilmesAPI.Data.Dtos.CinemaDto
 {
     public class CreateCinemaDto
     {
-        [Required(ErrorMessage = "O Nome fantasia é obrigatório.")]
         public string NomeFantasia { get; set; }
-        [Required]
-        public Endereco Endereco { get; set; }
         public int EnderecoID { get; set; }
     }
 }

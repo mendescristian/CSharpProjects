@@ -11,13 +11,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace FilmesAPI.Controllers
 {
     [ApiController]
-    [Route("endereco")]
+    [Route("cinema")]
     public class CinemaController : ControllerBase
     {
-        private DataContext _context;
+        private FilmeContext _context;
         private IMapper _mapper;
 
-        public CinemaController(DataContext context, IMapper mapper)
+        public CinemaController(FilmeContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -37,7 +37,6 @@ namespace FilmesAPI.Controllers
         public IActionResult ReadCinema()
         {
             var cinemas = _context.Cinemas;
-            var cinemasDto = _mapper.Map<ReadCinemaDto>(cinemas);
             return Ok(cinemas);
         }
 
