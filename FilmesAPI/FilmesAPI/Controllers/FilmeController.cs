@@ -11,13 +11,13 @@ using AutoMapper;
 namespace FilmesAPI.Controllers
 {
     [ApiController]
-    [Route("controller")]
+    [Route("filme")]
     public class FilmeController : ControllerBase
     {
-        private FilmeContext _context; //Adicionando o FilmeContext para ler no banco.
+        private DataContext _context; //Adicionando o FilmeContext para ler no banco.
         private IMapper _mapper;
 
-        public FilmeController(FilmeContext context, IMapper mapper) //Iniciando o FilmeContext e o Mapper através de um construtor.
+        public FilmeController(DataContext context, IMapper mapper) //Iniciando o FilmeContext e o Mapper através de um construtor.
         {
             _context = context;
             _mapper = mapper;
