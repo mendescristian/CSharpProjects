@@ -20,7 +20,7 @@ namespace FilmesAPI.Profiles
             CreateMap<UpdateFilmeDto, Filme>();
 
             CreateMap<CreateCinemaDto, Cinema>();
-            CreateMap<Cinema,ReadCinemaDto>();
+            CreateMap<Cinema, ReadCinemaDto>();
             CreateMap<UpdateCinemaDto, Cinema>();
 
             CreateMap<CreateEnderecoDto, Endereco>();
@@ -28,7 +28,11 @@ namespace FilmesAPI.Profiles
             CreateMap<UpdateEnderecoDto, Endereco>();
 
             CreateMap<CreateGerenteDto, Gerente>();
-            CreateMap<Gerente, ReadGerenteDto>();
+            CreateMap<Gerente, ReadGerenteDto>()
+                .ForMember(gerente => gerente.Cinemas, options => options
+                .MapFrom(gerente => gerente.Cinemas.Select
+                (cinema => new { cinema.Id, cinema.NomeFantasia, cinema.Endereco, cinema.EnderecoID })));
+                
             CreateMap<UpdateGerenteDto, Gerente>();
         }
     }

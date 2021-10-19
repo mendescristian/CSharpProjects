@@ -11,5 +11,6 @@ namespace FilmesAPI.Data.Dtos.CinemaDto
     {
         public string NomeFantasia { get; set; }
         public int EnderecoID { get; set; }
+        public int GerenteID { get; set; }
     }
 }

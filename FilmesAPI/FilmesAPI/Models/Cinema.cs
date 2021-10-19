@@ -15,6 +15,8 @@ namespace FilmesAPI.Models
         public string NomeFantasia { get; set; }
         public virtual Endereco Endereco { get; set; }
         public int EnderecoID { get; set; }
+        public virtual Gerente Gerente { get; set; }
+        public int GerenteID { get; set; }
 
 
     }
